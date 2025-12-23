@@ -700,7 +700,7 @@ function ModelCard({
                 target="_blank"
                 rel="noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/20 bg-primary/5 px-4 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/10 hover:border-primary/30 dark:bg-primary/10 dark:text-primary-foreground dark:hover:bg-primary/20"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/20 bg-primary/5 px-4 py-3 text-sm font-semibold text-primary transition-colors hover:bg-primary/10 hover:border-primary/30 dark:bg-primary/10 dark:text-white dark:hover:bg-primary/20"
               >
                 <span>Visit Website</span>
                 <ExternalLink className="h-4 w-4" />
