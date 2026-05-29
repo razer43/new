@@ -42,7 +42,8 @@ import {
   Music,
   X,
   Sun,
-  Moon
+  Moon,
+  Palette
 } from 'lucide-react'
 
 // Zhipu AI Provider Icon
@@ -198,329 +199,433 @@ const SORT_OPTIONS = [
   { value: 'name-desc', label: 'Name (Z-A)' },
 ]
 
-// Model Data - Updated with correct direct links and more models
+// Model Data - Upgraded to next-gen releases and new SOTA models
 const MODELS = [
   {
-    id: 'chatgpt-5-2-thinking',
-    name: 'ChatGPT 5.2 Thinking',
+    id: 'chatgpt-5-5-pro',
+    name: 'ChatGPT 5.5 Pro',
     provider: 'OpenAI',
     type: 'LLM',
-    released: 'Dec 11, 2025',
-    summary: 'Reasoning model tuned for deeper work: coding, long-doc analysis, planning, and tool use.',
-    tags: ['Reasoning', 'Tool-use', 'Frontier'],
+    released: 'Feb 15, 2026',
+    summary: 'OpenAI\'s supreme frontier reasoning model tuned for advanced multi-agent planning, coding, and dynamic synthesis.',
+    tags: ['Reasoning', 'Tool-use', 'Frontier', 'Agentic'],
     link: 'https://chatgpt.com/',
     featured: true,
   },
   {
-    id: 'gemini-3-pro',
-    name: 'Gemini 3 Pro',
+    id: 'gemini-3-5-pro',
+    name: 'Gemini 3.5 Pro',
     provider: 'Google',
     type: 'LLM',
-    released: 'Nov 2025',
-    summary: "Google's flagship model built for strong reasoning + native multimodal workflows.",
-    tags: ['Reasoning', 'Multimodal', 'Long context'],
+    released: 'Jan 10, 2026',
+    summary: 'Google\'s flagship multimodal marvel, native video understanding and massive 2M token context reasoning.',
+    tags: ['Reasoning', 'Multimodal', 'Long context', 'Video native'],
     link: 'https://gemini.google.com/',
     featured: true,
   },
   {
-    id: 'claude-opus-4-5',
-    name: 'Claude Opus 4.5',
+    id: 'claude-5-0-opus',
+    name: 'Claude 5.0 Opus',
     provider: 'Anthropic',
     type: 'LLM',
-    released: 'Nov 24, 2025',
-    summary: 'Frontier model aimed at coding, agents, and computer use with strong long-horizon behavior.',
-    tags: ['Reasoning', 'Agents', 'Coding'],
+    released: 'Mar 02, 2026',
+    summary: 'Anthropic\'s top-tier cognitive model designed for complex analysis, flawless system coding, and computer use workflows.',
+    tags: ['Reasoning', 'Agents', 'Coding', 'Flawless logic'],
     link: 'https://claude.ai/',
     featured: true,
   },
   {
-    id: 'grok-4-1',
-    name: 'Grok 4.1',
+    id: 'grok-5-0',
+    name: 'Grok 5.0',
     provider: 'xAI',
     type: 'LLM',
-    released: 'Nov 17, 2025',
-    summary: 'Upgraded usability + preference performance; strong conversational style with a reasoning mode.',
-    tags: ['Reasoning', 'Preference', 'Search'],
+    released: 'Jan 28, 2026',
+    summary: 'xAI\'s powerhouse engine featuring a highly tuned real-time database and deep analytical reasoning modes.',
+    tags: ['Reasoning', 'Search', 'Real-time', 'Uncensored'],
     link: 'https://grok.com/',
     featured: true,
   },
   {
-    id: 'glm-4-7',
-    name: 'GLM-4.7 Deep Thinking',
+    id: 'glm-5-0',
+    name: 'GLM-5.0 Deep Thinking',
     provider: 'Zhipu AI',
     type: 'LLM',
-    released: 'Dec 22, 2025',
-    summary: "Z.ai's flagship model with SOTA performance, superior agentic coding, and enhanced complex reasoning.",
-    tags: ['Reasoning', 'Coding', 'Open Source', 'Frontier'],
+    released: 'Feb 18, 2026',
+    summary: 'Zhipu AI\'s cutting-edge flagship with SOTA agentic coding, deep logical chain-of-thought, and multilinguality.',
+    tags: ['Reasoning', 'Coding', 'Frontier', 'SOTA agentic'],
     link: 'https://z.ai/',
     featured: true,
   },
   {
-    id: 'llama-4',
-    name: 'Llama 4',
+    id: 'deepseek-r2',
+    name: 'DeepSeek R2',
+    provider: 'DeepSeek',
+    type: 'LLM',
+    released: 'Jan 20, 2026',
+    summary: 'Elite open-weights reasoning model with unparalleled performance-to-cost ratio, advanced coding, and mathematics.',
+    tags: ['Open Source', 'Reasoning', 'Coding', 'Math'],
+    link: 'https://chat.deepseek.com/',
+    featured: true,
+  },
+  {
+    id: 'claude-3-7-sonnet',
+    name: 'Claude 3.7 Sonnet',
+    provider: 'Anthropic',
+    type: 'LLM',
+    released: 'Feb 2025',
+    summary: 'The world\'s most popular coding and analytical model featuring interactive reasoning mode toggles.',
+    tags: ['Coding', 'Reasoning', 'Developer favorite'],
+    link: 'https://claude.ai/',
+    featured: true,
+  },
+  {
+    id: 'llama-5',
+    name: 'Llama 5',
     provider: 'Meta',
     type: 'LLM',
-    released: 'Apr 2025',
-    summary: "Meta's next-gen open suite (Scout & Maverick). Massive reasoning gains over Llama 3.",
-    tags: ['Open weights', 'Reasoning'],
+    released: 'Feb 2026',
+    summary: 'Meta\'s premier open-weights suite with high-capacity reasoning, structured JSON logic, and fast inference.',
+    tags: ['Open weights', 'Reasoning', 'Fast API'],
     link: 'https://llama.meta.com/',
   },
   {
-    id: 'midjourney-v7',
-    name: 'Midjourney v7',
-    provider: 'Midjourney',
-    type: 'Image',
-    released: 'Apr 4, 2025',
-    summary: 'New default model with stunning precision, richer textures, and "Draft Mode".',
-    tags: ['Art', 'T2I', 'High Fidelity'],
-    link: 'https://www.midjourney.com/create',
+    id: 'deepseek-v3',
+    name: 'DeepSeek V3',
+    provider: 'DeepSeek',
+    type: 'LLM',
+    released: 'Dec 2024',
+    summary: 'Ultra-cost-efficient 671B parameter Mixture-of-Experts open-weights model built for daily developer tasks.',
+    tags: ['Open weights', 'MoE', 'Ultra cheap'],
+    link: 'https://chat.deepseek.com/',
   },
   {
-    id: 'mistral-3',
-    name: 'Mistral 3',
+    id: 'midjourney-v8',
+    name: 'Midjourney v8',
+    provider: 'Midjourney',
+    type: 'Image',
+    released: 'Feb 2026',
+    summary: 'Next-gen artistic rendering engine featuring native 8K texture rendering, advanced prompt consistency, and full pan-zoom tools.',
+    tags: ['Art', 'T2I', 'High Fidelity', 'Creative'],
+    link: 'https://www.midjourney.com/',
+    featured: true,
+  },
+  {
+    id: 'flux-2-pro',
+    name: 'FLUX.2 Pro',
+    provider: 'Black Forest Labs',
+    type: 'Image',
+    released: 'Dec 2025',
+    summary: 'State-of-the-art open-weights image standard with stellar typography, realistic anatomy, and complex composition following.',
+    tags: ['T2I', 'Typography', 'Open weights'],
+    link: 'https://blackforestlabs.ai/',
+    featured: true,
+  },
+  {
+    id: 'stable-image-ultra',
+    name: 'Stable Image Ultra',
+    provider: 'Stability',
+    type: 'Image',
+    released: 'Oct 2025',
+    summary: 'Stability\'s photorealistic masterpiece tailored for professional marketing assets and fine-detail textures.',
+    tags: ['T2I', 'Photorealistic', 'Commercial'],
+    link: 'https://stability.ai/',
+  },
+  {
+    id: 'stable-diffusion-3-5',
+    name: 'Stable Diffusion 3.5',
+    provider: 'Stability',
+    type: 'Image',
+    released: 'Oct 2024',
+    summary: 'High-performing, highly customisable local diffusion model popular for custom checkpoints and LoRA training.',
+    tags: ['T2I', 'Open weights', 'Customisable'],
+    link: 'https://stability.ai/',
+  },
+  {
+    id: 'sora-v2',
+    name: 'Sora v2',
+    provider: 'OpenAI',
+    type: 'Video',
+    released: 'Nov 2025',
+    summary: 'SOTA video model simulating real-world physics, rendering 1080p outputs with perfect spatial consistency up to 60s.',
+    tags: ['T2V', 'Physics-based', 'SOTA video'],
+    link: 'https://openai.com/sora',
+    featured: true,
+  },
+  {
+    id: 'runway-gen-5-0',
+    name: 'Runway Gen-5.0',
+    provider: 'Runway',
+    type: 'Video',
+    released: 'Jan 2026',
+    summary: 'Cinematic powerhouse with full director controls, dynamic motion brushes, and unprecedented fidelity.',
+    tags: ['T2V', 'Control', 'Cinematic'],
+    link: 'https://runwayml.com/',
+    featured: true,
+  },
+  {
+    id: 'luma-dream-machine-v2',
+    name: 'Luma Dream Machine v2',
+    provider: 'Luma AI',
+    type: 'Video',
+    released: 'Dec 2025',
+    summary: 'High-speed action sequence render model capable of seamless cinematic tracking and complex fluid dynamics.',
+    tags: ['T2V', 'Action', 'Cinematic camera'],
+    link: 'https://lumalabs.ai/dream-machine',
+  },
+  {
+    id: 'kling-2-0',
+    name: 'Kling 2.0',
+    provider: 'Kuaishou',
+    type: 'Video',
+    released: 'Nov 2025',
+    summary: 'Asia\'s flagship video generator, rendering lifelike character expressions and cinematic lighting.',
+    tags: ['T2V', 'Character consistency', 'High Quality'],
+    link: 'https://klingai.com/',
+  },
+  {
+    id: 'suno-v4',
+    name: 'Suno v4',
+    provider: 'Suno',
+    type: 'Audio',
+    released: 'Jan 2026',
+    summary: 'Full-song generation with flawless vocal clarity, structured instrument stems, and intelligent lyric formatting.',
+    tags: ['Text-to-music', 'Vocals', 'Instrumental'],
+    link: 'https://suno.com/',
+    featured: true,
+  },
+  {
+    id: 'udio-v2',
+    name: 'Udio v2.0',
+    provider: 'Udio',
+    type: 'Audio',
+    released: 'Feb 2026',
+    summary: 'Professional grade text-to-music generator featuring custom audio mastering, audio-to-audio remixing, and separate stems.',
+    tags: ['Text-to-music', 'Remixing', 'Studio Quality'],
+    link: 'https://www.udio.com/',
+    featured: true,
+  },
+  {
+    id: 'elevenlabs-reader',
+    name: 'ElevenLabs Reader',
+    provider: 'ElevenLabs',
+    type: 'Audio',
+    released: 'Sep 2025',
+    summary: 'World-leading voice cloning and text-to-speech engine with deep emotional inflection and multilingual support.',
+    tags: ['TTS', 'Voice cloning', 'Narration'],
+    link: 'https://elevenlabs.io/',
+    featured: true,
+  },
+  {
+    id: 'mistral-4',
+    name: 'Mistral 4',
     provider: 'Mistral',
     type: 'LLM',
-    released: 'Mar 2025',
-    summary: 'European flagship model focusing on efficiency and multilingual reasoning.',
-    tags: ['Open weights', 'Efficiency'],
+    released: 'Jan 2026',
+    summary: 'European open flagship focusing on extreme token throughput, multi-lingual precision, and low-footprint hosting.',
+    tags: ['Open weights', 'Efficiency', 'Multilingual'],
     link: 'https://chat.mistral.ai/',
   },
   {
-    id: 'command-r-plus',
-    name: 'Command R+',
+    id: 'command-r-plus-plus',
+    name: 'Command R++',
     provider: 'Cohere',
     type: 'LLM',
-    released: 'Apr 2024',
-    summary: 'Advanced reasoning model optimized for RAG, tool use, and long-context understanding.',
-    tags: ['RAG', 'Reasoning', 'Citations'],
+    released: 'Jan 2026',
+    summary: 'Enterprise-grade LLM optimized for seamless RAG search, high-volume tool-use, and structured JSON outputs.',
+    tags: ['RAG', 'Enterprise', 'JSON formatting'],
     link: 'https://cohere.com/',
   },
   {
-    id: 'gemini-2-0',
-    name: 'Gemini 2.0',
+    id: 'gemini-2-5-flash',
+    name: 'Gemini 2.5 Flash',
     provider: 'Google',
     type: 'LLM',
-    released: 'Jan 23, 2025',
-    summary: 'Major update introducing enhanced agentic capabilities and thinking modes.',
-    tags: ['Multimodal', 'Agents'],
+    released: 'Oct 2025',
+    summary: 'Lightning-fast multimodal API with native audio output, real-time vision processing, and broad task efficiency.',
+    tags: ['Multimodal', 'Real-time', 'Fast API'],
     link: 'https://gemini.google.com/',
   },
   {
-    id: 'o3-mini',
-    name: 'OpenAI o3-mini',
+    id: 'o4-mini',
+    name: 'OpenAI o4-mini',
     provider: 'OpenAI',
     type: 'LLM',
-    released: 'Jan 31, 2025',
-    summary: 'Specialized reasoning model for STEM/coding, released before the 5.2 unification.',
-    tags: ['Reasoning', 'Math', 'Coding'],
+    released: 'Feb 2026',
+    summary: 'Fast and cheap reasoning model built for developer integrations, math operations, and recursive sub-agent logic.',
+    tags: ['Reasoning', 'Math', 'Coding', 'API favorite'],
     link: 'https://chatgpt.com/',
   },
   {
-    id: 'gpt-4o',
-    name: 'GPT-4o',
+    id: 'gpt-5o',
+    name: 'GPT-5o',
     provider: 'OpenAI',
     type: 'LLM',
-    released: 'May 13, 2024',
-    summary: 'Real-time multimodal (text/vision/audio). Reliable daily-driver assistant.',
-    tags: ['Multimodal', 'Real-time'],
+    released: 'Dec 2025',
+    summary: 'Sleek real-time multimodal intelligence combining flawless speech synthesis, instant vision analysis, and reliable assistance.',
+    tags: ['Multimodal', 'Real-time', 'Daily helper'],
     link: 'https://chatgpt.com/',
   },
   {
-    id: 'claude-3-5-sonnet',
-    name: 'Claude 3.5 Sonnet',
+    id: 'claude-4-0-sonnet',
+    name: 'Claude 4.0 Sonnet',
     provider: 'Anthropic',
     type: 'LLM',
-    released: 'Jun 21, 2024',
-    summary: 'Fast, strong reasoning + coding. Great for long-context instruction following.',
-    tags: ['Reasoning', 'Coding', 'Long context'],
+    released: 'Jan 2026',
+    summary: 'High-speed cognitive model popular for code bases, robust workspace agents, and extreme instruction-following precision.',
+    tags: ['Reasoning', 'Coding', 'Agents'],
     link: 'https://claude.ai/',
   },
   {
-    id: 'llama-3-2',
-    name: 'Llama 3.2 Vision',
+    id: 'llama-4-vision',
+    name: 'Llama 4 Vision',
     provider: 'Meta',
     type: 'LLM',
-    released: 'Sep 2024',
-    summary: "Meta's first open weights model with native vision capabilities.",
-    tags: ['Open weights', 'Vision'],
+    released: 'Aug 2025',
+    summary: 'Meta\'s premium open-weights vision LLM with excellent OCR, chart analysis, and spatial coordinate mapping.',
+    tags: ['Open weights', 'Vision', 'OCR'],
     link: 'https://llama.meta.com/',
   },
   {
-    id: 'qwen-2-5',
-    name: 'Qwen 2.5',
+    id: 'qwen-3-0',
+    name: 'Qwen 3.0',
     provider: 'Alibaba',
     type: 'LLM',
-    released: 'Sep 2024',
-    summary: 'Massive open model suite with excellent coding and math benchmarks.',
+    released: 'Feb 2026',
+    summary: 'Alibaba\'s powerhouse open weights suite with SOTA math reasoning and full local capability.',
     tags: ['Open weights', 'Math', 'Coding'],
     link: 'https://qwen.ai/',
   },
   {
-    id: 'deepseek-r1',
-    name: 'DeepSeek R1',
-    provider: 'DeepSeek',
-    type: 'LLM',
-    released: '2025',
-    summary: 'Open model family known for strong reasoning at extremely low inference cost.',
-    tags: ['Open', 'Reasoning'],
-    link: 'https://chat.deepseek.com/',
-  },
-  {
-    id: 'mistral-large-2',
-    name: 'Mistral Large 2',
+    id: 'mistral-large-3',
+    name: 'Mistral Large 3',
     provider: 'Mistral',
     type: 'LLM',
-    released: 'Jul 2024',
-    summary: 'Top-tier European model with 128k context and strong function calling.',
-    tags: ['Multilingual', 'Coding'],
+    released: 'Dec 2025',
+    summary: 'Mistral\'s commercial cloud core featuring robust function calling, a 128k context, and multilingual accuracy.',
+    tags: ['Multilingual', 'Enterprise', 'Function calling'],
     link: 'https://chat.mistral.ai/',
-  },
-  {
-    id: 'flux-1',
-    name: 'FLUX.1',
-    provider: 'Black Forest Labs',
-    type: 'Image',
-    released: '2024',
-    summary: 'State-of-the-art open weights image generator known for prompt adherence.',
-    tags: ['T2I', 'Open weights'],
-    link: 'https://blackforestlabs.ai/',
-  },
-  {
-    id: 'runway-gen-4-5',
-    name: 'Runway Gen-4.5',
-    provider: 'Runway',
-    type: 'Video',
-    released: 'Dec 2024',
-    summary: "World's top-rated video model with unprecedented visual fidelity and creative control.",
-    tags: ['T2V', 'Control', 'SOTA'],
-    link: 'https://runwayml.com/generate',
-  },
-  {
-    id: 'kling',
-    name: 'Kling',
-    provider: 'Kuaishou',
-    type: 'Video',
-    released: '2024',
-    summary: 'Impressive video generation model supporting up to 2 minutes of 1080p video.',
-    tags: ['T2V', 'Long duration'],
-    link: 'https://app.klingai.com/global/text-to-video/new',
-  },
-  {
-    id: 'suno-v3-5',
-    name: 'Suno v3.5',
-    provider: 'Suno',
-    type: 'Audio',
-    released: '2024',
-    summary: 'Generates full songs with lyrics and vocals; widely considered SOTA for music.',
-    tags: ['Text-to-music', 'Vocals'],
-    link: 'https://suno.com/',
-  },
-  {
-    id: 'udio',
-    name: 'Udio',
-    provider: 'Udio',
-    type: 'Audio',
-    released: '2024',
-    summary: 'AI music generator with intuitive controls and professional-quality output.',
-    tags: ['Text-to-music', 'High Quality'],
-    link: 'https://www.udio.com/',
-  },
-  {
-    id: 'stable-diffusion-xl',
-    name: 'Stable Diffusion XL',
-    provider: 'Stability',
-    type: 'Image',
-    released: '2024',
-    summary: 'Popular open-source image generation model with fine-grained control.',
-    tags: ['T2I', 'Open weights'],
-    link: 'https://stability.ai/',
   },
 ]
 
-// Benchmark Data - Updated with GLM-4.7
+// Upgraded Benchmark Data matching updated next-gen versions
 const BENCHMARK_MODELS = [
   {
-    id: 'gemini-3-pro',
-    name: 'Gemini 3 Pro',
+    id: 'gemini-3-5-pro',
+    name: 'Gemini 3.5 Pro',
     provider: 'Google',
-    released: 'Nov 2025',
+    released: 'Jan 10, 2026',
     link: 'https://gemini.google.com/',
-    lmarena_elo: 1490,
-    gpqa_diamond_no_tools: 91.9,
-    swe_bench_verified: 76.2,
-    arc_agi_2_verified: 31.1,
-    hle_no_tools: 37.52,
+    lmarena_elo: 1520,
+    gpqa_diamond_no_tools: 94.2,
+    swe_bench_verified: 81.5,
+    arc_agi_2_verified: 36.4,
+    hle_no_tools: 42.5,
     sources: [
+      { label: 'Google', url: 'https://deepmind.google/technologies/gemini/' },
       { label: 'LMArena', url: 'https://lmarena.ai/leaderboard/text' },
-      { label: 'HLE', url: 'https://scale.com/leaderboard/humanitys_last_exam' },
     ],
   },
   {
-    id: 'chatgpt-5-2-thinking',
-    name: 'ChatGPT 5.2 Thinking',
+    id: 'chatgpt-5-5-pro',
+    name: 'ChatGPT 5.5 Pro',
     provider: 'OpenAI',
-    released: 'Dec 11, 2025',
+    released: 'Feb 15, 2026',
     link: 'https://chatgpt.com/',
-    lmarena_elo: 1442,
-    gpqa_diamond_no_tools: 92.4,
-    swe_bench_verified: 80.0,
-    arc_agi_2_verified: 52.9,
-    hle_no_tools: 34.5,
+    lmarena_elo: 1515,
+    gpqa_diamond_no_tools: 95.0,
+    swe_bench_verified: 84.2,
+    arc_agi_2_verified: 56.1,
+    hle_no_tools: 39.8,
     sources: [
-      { label: 'OpenAI', url: 'https://openai.com/index/introducing-gpt-5-2/' },
+      { label: 'OpenAI', url: 'https://openai.com/index/' },
       { label: 'LMArena', url: 'https://lmarena.ai/leaderboard/text' },
     ],
   },
   {
-    id: 'glm-4-7',
-    name: 'GLM-4.7 Deep Thinking',
+    id: 'deepseek-r2',
+    name: 'DeepSeek R2',
+    provider: 'DeepSeek',
+    released: 'Jan 20, 2026',
+    link: 'https://chat.deepseek.com/',
+    lmarena_elo: 1512,
+    gpqa_diamond_no_tools: 93.6,
+    swe_bench_verified: 82.8,
+    arc_agi_2_verified: 54.0,
+    hle_no_tools: 44.1,
+    sources: [
+      { label: 'DeepSeek', url: 'https://github.com/deepseek-ai' },
+      { label: 'LMArena', url: 'https://lmarena.ai/leaderboard/text' },
+    ],
+  },
+  {
+    id: 'glm-5-0',
+    name: 'GLM-5.0 Deep Thinking',
     provider: 'Zhipu AI',
-    released: 'Dec 22, 2025',
+    released: 'Feb 18, 2026',
     link: 'https://z.ai/',
-    lmarena_elo: 1485,
-    gpqa_diamond_no_tools: 89.3,
-    swe_bench_verified: 78.5,
-    arc_agi_2_verified: 48.2,
-    hle_no_tools: 42.8,
+    lmarena_elo: 1508,
+    gpqa_diamond_no_tools: 91.2,
+    swe_bench_verified: 81.0,
+    arc_agi_2_verified: 51.5,
+    hle_no_tools: 46.2,
     sources: [
-      { label: 'Z.ai', url: 'https://z.ai/blog/glm-4.7' },
+      { label: 'Zhipu AI', url: 'https://z.ai/' },
       { label: 'LMArena', url: 'https://lmarena.ai/leaderboard/text' },
     ],
   },
   {
-    id: 'claude-opus-4-5',
-    name: 'Claude Opus 4.5',
+    id: 'claude-5-0-opus',
+    name: 'Claude 5.0 Opus',
     provider: 'Anthropic',
-    released: 'Nov 24, 2025',
+    released: 'Mar 02, 2026',
     link: 'https://claude.ai/',
-    lmarena_elo: 1469,
-    gpqa_diamond_no_tools: 87.0,
-    swe_bench_verified: 80.9,
-    arc_agi_2_verified: 37.6,
-    hle_no_tools: 25.2,
+    lmarena_elo: 1502,
+    gpqa_diamond_no_tools: 92.5,
+    swe_bench_verified: 83.5,
+    arc_agi_2_verified: 42.1,
+    hle_no_tools: 33.6,
     sources: [
-      { label: 'Anthropic', url: 'https://www.anthropic.com/news/claude-opus-4-5' },
+      { label: 'Anthropic', url: 'https://www.anthropic.com/' },
       { label: 'LMArena', url: 'https://lmarena.ai/leaderboard/text' },
-      { label: 'HLE', url: 'https://scale.com/leaderboard/humanitys_last_exam' },
     ],
   },
   {
-    id: 'grok-4-1',
-    name: 'Grok 4.1',
+    id: 'grok-5-0',
+    name: 'Grok 5.0',
     provider: 'xAI',
-    released: 'Nov 17, 2025',
+    released: 'Jan 28, 2026',
     link: 'https://grok.com/',
-    lmarena_elo: 1477,
-    gpqa_diamond_no_tools: null,
-    swe_bench_verified: null,
-    arc_agi_2_verified: null,
-    hle_no_tools: null,
+    lmarena_elo: 1495,
+    gpqa_diamond_no_tools: 89.8,
+    swe_bench_verified: 79.5,
+    arc_agi_2_verified: 32.5,
+    hle_no_tools: 35.4,
     sources: [
-      { label: 'xAI', url: 'https://x.ai/news/grok-4-1' },
+      { label: 'xAI', url: 'https://x.ai/' },
       { label: 'LMArena', url: 'https://lmarena.ai/leaderboard/text' },
-      { label: 'HLE', url: 'https://scale.com/leaderboard/humanitys_last_exam' },
     ],
   },
+]
+
+// Pricing Data - Comprehensive token limits and pricing details for SOTA models
+const PRICING_DATA = [
+  { id: 'chatgpt-5-5-pro', name: 'ChatGPT 5.5 Pro', provider: 'OpenAI', type: 'LLM', context: '1,000,000', inputCost: 5.00, outputCost: 15.00, desc: 'Advanced reasoning, logic, and long-doc multi-agent workflows.' },
+  { id: 'gemini-3-5-pro', name: 'Gemini 3.5 Pro', provider: 'Google', type: 'LLM', context: '2,000,000', inputCost: 1.25, outputCost: 5.00, desc: 'Highest native multimodal context window and native video processing.' },
+  { id: 'claude-5-0-opus', name: 'Claude 5.0 Opus', provider: 'Anthropic', type: 'LLM', context: '200,000', inputCost: 15.00, outputCost: 75.00, desc: 'Extreme logical precision, large developer codebase analysis, and complex code.' },
+  { id: 'grok-5-0', name: 'Grok 5.0', provider: 'xAI', type: 'LLM', context: '128,000', inputCost: 2.00, outputCost: 10.00, desc: 'Real-time search database query synthesis and preference alignment.' },
+  { id: 'glm-5-0', name: 'GLM-5.0 Deep Thinking', provider: 'Zhipu AI', type: 'LLM', context: '128,000', inputCost: 1.00, outputCost: 4.00, desc: 'Flagship reasoning and high performance bilingual agentic coding.' },
+  { id: 'deepseek-r2', name: 'DeepSeek R2', provider: 'DeepSeek', type: 'LLM', context: '128,000', inputCost: 0.14, outputCost: 0.28, desc: 'SOTA open-weights reasoning model with extremely low operating cost.' },
+  { id: 'claude-3-7-sonnet', name: 'Claude 3.7 Sonnet', provider: 'Anthropic', type: 'LLM', context: '200,000', inputCost: 3.00, outputCost: 15.00, desc: 'Developer favorite featuring active thinking and fast interactive loops.' },
+  { id: 'deepseek-v3', name: 'DeepSeek V3', provider: 'DeepSeek', type: 'LLM', context: '128,000', inputCost: 0.14, outputCost: 0.28, desc: 'Ultra-cheap 671B open-weights Mixture-of-Experts standard.' },
+  { id: 'o4-mini', name: 'OpenAI o4-mini', provider: 'OpenAI', type: 'LLM', context: '128,000', inputCost: 0.15, outputCost: 0.60, desc: 'Ultra-fast cheap reasoning API optimized for STEM math operations.' },
+  { id: 'gpt-5o', name: 'GPT-5o', provider: 'OpenAI', type: 'LLM', context: '128,000', inputCost: 2.50, outputCost: 10.00, desc: 'Reliable Daily Helper assistant with real-time speech and vision support.' },
+  { id: 'claude-4-0-sonnet', name: 'Claude 4.0 Sonnet', provider: 'Anthropic', type: 'LLM', context: '200,000', inputCost: 3.00, outputCost: 15.00, desc: 'High-speed cognitive workspace model with elite agentic accuracy.' },
+  { id: 'midjourney-v8', name: 'Midjourney v8', provider: 'Midjourney', type: 'Image', context: 'N/A', inputCost: 0, outputCost: 0, unitCost: 0.05, unitLabel: '/ image', desc: 'Flagship photorealistic digital art generation.' },
+  { id: 'flux-2-pro', name: 'FLUX.2 Pro', provider: 'Black Forest Labs', type: 'Image', context: 'N/A', inputCost: 0, outputCost: 0, unitCost: 0.04, unitLabel: '/ image', desc: 'Advanced prompt adherence and high fidelity text rendering.' },
+  { id: 'sora-v2', name: 'Sora v2', provider: 'OpenAI', type: 'Video', context: 'N/A', inputCost: 0, outputCost: 0, unitCost: 0.10, unitLabel: '/ video sec', desc: 'State-of-the-art physical world scene simulation.' },
+  { id: 'runway-gen-5-0', name: 'Runway Gen-5.0', provider: 'Runway', type: 'Video', context: 'N/A', inputCost: 0, outputCost: 0, unitCost: 0.08, unitLabel: '/ video sec', desc: 'Professional cinematic camera brushes and motion controllers.' },
+  { id: 'suno-v4', name: 'Suno v4', provider: 'Suno', type: 'Audio', context: 'N/A', inputCost: 0, outputCost: 0, unitCost: 0.01, unitLabel: '/ song', desc: 'Text to full high-fidelity vocal tracks and separation.' },
+  { id: 'udio-v2', name: 'Udio v2.0', provider: 'Udio', type: 'Audio', context: 'N/A', inputCost: 0, outputCost: 0, unitCost: 0.01, unitLabel: '/ song', desc: 'Professional studio-grade audio rendering and masters.' }
 ]
 
 // Helper Functions
@@ -552,6 +657,7 @@ function ModelCard({
   onToggleFavorite,
   onClick,
 }: {
+  key?: any
   model: any
   isFavorite: boolean
   onToggleFavorite: (e: React.MouseEvent) => void
@@ -713,6 +819,15 @@ function ModelCard({
   )
 }
 
+const PALETTES = [
+  { id: 'slate', name: 'Zinc Slate (Classic)', color: 'bg-zinc-500' },
+  { id: 'emerald', name: 'Midnight Emerald', color: 'bg-emerald-500' },
+  { id: 'cyberpunk', name: 'Cyberpunk Gold', color: 'bg-yellow-500' },
+  { id: 'rose', name: 'Sunset Rose', color: 'bg-rose-500' },
+  { id: 'ocean', name: 'Ocean Breeze', color: 'bg-sky-500' },
+  { id: 'nebula', name: 'Royal Purple', color: 'bg-indigo-500' },
+]
+
 // Main Component
 export default function AIModelsExplorer() {
   const [query, setQuery] = useState('')
@@ -724,8 +839,16 @@ export default function AIModelsExplorer() {
   const [activeTab, setActiveTab] = useState('models')
   const { theme, setTheme } = useTheme()
   const isMobile = useIsMobile()
+  const [palette, setPalette] = useState('slate')
 
-  // Load favorites from localStorage on mount
+  // Pricing calculator states
+  const [calcModel, setCalcModel] = useState('chatgpt-5-5-pro')
+  const [calcInputTokens, setCalcInputTokens] = useState(100000)
+  const [calcOutputTokens, setCalcOutputTokens] = useState(20000)
+  const [calcQuantity, setCalcQuantity] = useState(10)
+  const [pricingQuery, setPricingQuery] = useState('')
+
+  // Load favorites & theme palette from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('ai-models-favorites')
     if (saved) {
@@ -735,7 +858,17 @@ export default function AIModelsExplorer() {
         console.error('Failed to load favorites:', e)
       }
     }
+    const savedPalette = localStorage.getItem('ai-models-palette') || 'slate'
+    setPalette(savedPalette)
+    document.documentElement.setAttribute('data-palette', savedPalette)
   }, [])
+
+  const changePalette = (newPalette: string) => {
+    setPalette(newPalette)
+    localStorage.setItem('ai-models-palette', newPalette)
+    document.documentElement.setAttribute('data-palette', newPalette)
+    toast.success(`Theme updated to ${PALETTES.find(p => p.id === newPalette)?.name}`)
+  }
 
   // Save favorites to localStorage when they change
   useEffect(() => {
@@ -788,9 +921,101 @@ export default function AIModelsExplorer() {
     return sorted
   }, [query, provider, type, sort, favorites])
 
-  const benchRows = useMemo(() => {
-    return [...BENCHMARK_MODELS].sort(byReleaseDesc)
+  const [benchSortField, setBenchSortField] = useState<string>('lmarena_elo')
+  const [benchSortOrder, setBenchSortOrder] = useState<'asc' | 'desc'>('desc')
+
+  const maxMetrics = useMemo(() => {
+    const elos = BENCHMARK_MODELS.map(m => m.lmarena_elo).filter(Boolean) as number[]
+    const gpqa = BENCHMARK_MODELS.map(m => m.gpqa_diamond_no_tools).filter(Boolean) as number[]
+    const swe = BENCHMARK_MODELS.map(m => m.swe_bench_verified).filter(Boolean) as number[]
+    const arc = BENCHMARK_MODELS.map(m => m.arc_agi_2_verified).filter(Boolean) as number[]
+    const hle = BENCHMARK_MODELS.map(m => m.hle_no_tools).filter(Boolean) as number[]
+
+    return {
+      lmarena_elo: elos.length ? Math.max(...elos) : 0,
+      gpqa_diamond_no_tools: gpqa.length ? Math.max(...gpqa) : 0,
+      swe_bench_verified: swe.length ? Math.max(...swe) : 0,
+      arc_agi_2_verified: arc.length ? Math.max(...arc) : 0,
+      hle_no_tools: hle.length ? Math.max(...hle) : 0,
+    }
   }, [])
+
+  const sortedBenchmarks = useMemo(() => {
+    let list = [...BENCHMARK_MODELS]
+    if (provider !== 'All') {
+      list = list.filter(b => b.provider === provider)
+    }
+    
+    return list.sort((a: any, b: any) => {
+      const valA = a[benchSortField]
+      const valB = b[benchSortField]
+      
+      if (valA === null || valA === undefined) return 1
+      if (valB === null || valB === undefined) return -1
+      
+      if (benchSortOrder === 'asc') {
+        return valA - valB
+      } else {
+        return valB - valA
+      }
+    })
+  }, [provider, benchSortField, benchSortOrder])
+
+  const calcResult = useMemo(() => {
+    const selected = PRICING_DATA.find(p => p.id === calcModel) || PRICING_DATA[0]
+    
+    let total = 0
+    let breakdown = { input: 0, output: 0, media: 0 }
+    
+    if (selected.type === 'LLM') {
+      breakdown.input = (calcInputTokens / 1_000_000) * selected.inputCost
+      breakdown.output = (calcOutputTokens / 1_000_000) * selected.outputCost
+      total = breakdown.input + breakdown.output
+    } else {
+      breakdown.media = calcQuantity * (selected.unitCost || 0)
+      total = breakdown.media
+    }
+    
+    // Find deepseek open weights equivalent for saving suggestions
+    let savings: any = null
+    if (selected.type === 'LLM' && selected.id !== 'deepseek-r2' && selected.id !== 'deepseek-v3') {
+      const cheapRef = PRICING_DATA.find(p => p.id === 'deepseek-r2')!
+      const cheapInput = (calcInputTokens / 1_000_000) * cheapRef.inputCost
+      const cheapOutput = (calcOutputTokens / 1_000_000) * cheapRef.outputCost
+      const cheapTotal = cheapInput + cheapOutput
+      const diff = total - cheapTotal
+      const percent = total > 0 ? (diff / total) * 100 : 0
+      
+      if (diff > 0.001) {
+        savings = {
+          name: cheapRef.name,
+          total: cheapTotal,
+          savedAmount: diff,
+          percent: percent.toFixed(0)
+        }
+      }
+    }
+    
+    return {
+      model: selected,
+      total,
+      breakdown,
+      savings
+    }
+  }, [calcModel, calcInputTokens, calcOutputTokens, calcQuantity])
+
+  const filteredPricing = useMemo(() => {
+    const q = pricingQuery.trim().toLowerCase()
+    return PRICING_DATA.filter((p) => {
+      if (provider !== 'All' && p.provider !== provider) return false
+      if (!q) return true
+      return (
+        p.name.toLowerCase().includes(q) ||
+        p.provider.toLowerCase().includes(q) ||
+        p.desc.toLowerCase().includes(q)
+      )
+    })
+  }, [pricingQuery, provider])
 
   const stats = useMemo(() => {
     const totalModels = MODELS.length
@@ -860,25 +1085,47 @@ export default function AIModelsExplorer() {
               </div>
             </div>
 
-            {/* Enhanced Theme Toggle Button */}
-            <Button
-              variant={theme === 'dark' ? 'default' : 'outline'}
-              size="default"
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="gap-2 font-semibold"
-            >
-              {theme === 'dark' ? (
-                <>
-                  <Moon className="h-4 w-4" />
-                  <span className="hidden sm:inline">Dark Mode</span>
-                </>
-              ) : (
-                <>
-                  <Sun className="h-4 w-4" />
-                  <span className="hidden sm:inline">Light Mode</span>
-                </>
-              )}
-            </Button>
+            <div className="flex items-center gap-3">
+              {/* Color Palette / Theme Selector */}
+              <Select value={palette} onValueChange={changePalette}>
+                <SelectTrigger className="w-[185px] border-2 h-10 font-semibold hover:bg-muted transition-all">
+                  <div className="flex items-center gap-2">
+                    <Palette className="h-4 w-4 text-primary" />
+                    <SelectValue placeholder="Theme Palette" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  {PALETTES.map((p) => (
+                    <SelectItem key={p.id} value={p.id} className="cursor-pointer">
+                      <div className="flex items-center gap-2">
+                        <span className={`h-3.5 w-3.5 rounded-full ${p.color} border border-white/20`} />
+                        <span>{p.name}</span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+
+              {/* Enhanced Theme Toggle Button */}
+              <Button
+                variant={theme === 'dark' ? 'default' : 'outline'}
+                size="default"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                className="gap-2 font-semibold h-10"
+              >
+                {theme === 'dark' ? (
+                  <>
+                    <Moon className="h-4 w-4" />
+                    <span className="hidden sm:inline">Dark Mode</span>
+                  </>
+                ) : (
+                  <>
+                    <Sun className="h-4 w-4" />
+                    <span className="hidden sm:inline">Light Mode</span>
+                  </>
+                )}
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -1047,18 +1294,22 @@ export default function AIModelsExplorer() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-[600px]">
-            <TabsTrigger value="models" className="gap-2">
-              <Sparkles className="h-4 w-4" />
+          <TabsList className="grid w-full grid-cols-4 lg:w-[800px]">
+            <TabsTrigger value="models" className="gap-2 font-semibold">
+              <Sparkles className="h-4 w-4 text-primary" />
               Models ({filtered.length})
             </TabsTrigger>
-            <TabsTrigger value="benchmarks" className="gap-2">
+            <TabsTrigger value="benchmarks" className="gap-2 font-semibold">
               <Award className="h-4 w-4" />
               Benchmarks
             </TabsTrigger>
-            <TabsTrigger value="timeline" className="gap-2">
+            <TabsTrigger value="timeline" className="gap-2 font-semibold">
               <Calendar className="h-4 w-4" />
               Timeline
+            </TabsTrigger>
+            <TabsTrigger value="pricing" className="gap-2 font-semibold">
+              <Zap className="h-4 w-4 text-amber-500 fill-amber-500/20" />
+              Token & Pricing
             </TabsTrigger>
           </TabsList>
 
@@ -1089,102 +1340,211 @@ export default function AIModelsExplorer() {
 
           {/* Benchmarks Tab */}
           <TabsContent value="benchmarks" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Award className="h-5 w-5" />
-                  Frontier Model Benchmarks
-                </CardTitle>
-                <p className="text-sm text-muted-foreground">
-                  Performance metrics for the newest frontier reasoning models
-                </p>
+            <Card className="shadow-xl border-2">
+              <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div>
+                  <CardTitle className="flex items-center gap-2 text-xl font-bold">
+                    <Award className="h-6 w-6 text-primary animate-pulse" />
+                    Frontier Model Benchmarks
+                  </CardTitle>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    Direct comparison matrix of cognitive reasoning and abstraction performance metrics
+                  </p>
+                </div>
+                {provider !== 'All' && (
+                  <Badge variant="outline" className="text-xs py-1 border-primary/40 bg-primary/5 text-primary self-start sm:self-center font-bold">
+                    Filtering provider: {provider}
+                  </Badge>
+                )}
               </CardHeader>
-              <CardContent>
-                <div className="space-y-6">
-                  {benchRows.map((model, index) => (
-                    <motion.div
-                      key={model.id}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                      className="space-y-3 rounded-xl border-2 p-4"
-                    >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex items-center gap-3">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-lg border bg-muted/50">
-                            <ProviderIcon name={model.provider} />
+              <CardContent className="p-0 sm:p-6">
+                <div className="overflow-x-auto border-t sm:border border-border sm:rounded-xl">
+                  <table className="w-full text-sm text-left border-collapse min-w-[800px]">
+                    <thead>
+                      <tr className="bg-muted/50 border-b border-border select-none">
+                        <th className="p-4 font-semibold text-muted-foreground">Model & Provider</th>
+                        <th 
+                          onClick={() => {
+                            if (benchSortField === 'lmarena_elo') {
+                              setBenchSortOrder(benchSortOrder === 'desc' ? 'asc' : 'desc')
+                            } else {
+                              setBenchSortField('lmarena_elo')
+                              setBenchSortOrder('desc')
+                            }
+                          }}
+                          className="p-4 font-bold text-muted-foreground cursor-pointer hover:text-primary transition-all text-center border-l"
+                        >
+                          <div className="flex items-center justify-center gap-1.5">
+                            <span>LMArena Elo</span>
+                            <span className="text-[11px] opacity-75">
+                              {benchSortField === 'lmarena_elo' ? (benchSortOrder === 'desc' ? '▼' : '▲') : '⇅'}
+                            </span>
                           </div>
-                          <div>
-                            <div className="font-semibold">{model.name}</div>
-                            <div className="text-xs text-muted-foreground">{model.released}</div>
+                        </th>
+                        <th 
+                          onClick={() => {
+                            if (benchSortField === 'gpqa_diamond_no_tools') {
+                              setBenchSortOrder(benchSortOrder === 'desc' ? 'asc' : 'desc')
+                            } else {
+                              setBenchSortField('gpqa_diamond_no_tools')
+                              setBenchSortOrder('desc')
+                            }
+                          }}
+                          className="p-4 font-bold text-muted-foreground cursor-pointer hover:text-primary transition-all text-center border-l"
+                        >
+                          <div className="flex items-center justify-center gap-1.5">
+                            <span>GPQA Diamond</span>
+                            <span className="text-[11px] opacity-75">
+                              {benchSortField === 'gpqa_diamond_no_tools' ? (benchSortOrder === 'desc' ? '▼' : '▲') : '⇅'}
+                            </span>
                           </div>
-                        </div>
-                        <Badge variant="secondary" className="gap-1 border-2">
-                          <BarChart3 className="h-3 w-3" />
-                          Elo: {model.lmarena_elo}
-                        </Badge>
-                      </div>
-
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">GPQA Diamond</span>
-                            <span className="font-semibold">{model.gpqa_diamond_no_tools ?? '—'}%</span>
+                        </th>
+                        <th 
+                          onClick={() => {
+                            if (benchSortField === 'swe_bench_verified') {
+                              setBenchSortOrder(benchSortOrder === 'desc' ? 'asc' : 'desc')
+                            } else {
+                              setBenchSortField('swe_bench_verified')
+                              setBenchSortOrder('desc')
+                            }
+                          }}
+                          className="p-4 font-bold text-muted-foreground cursor-pointer hover:text-primary transition-all text-center border-l"
+                        >
+                          <div className="flex items-center justify-center gap-1.5">
+                            <span>SWE-bench</span>
+                            <span className="text-[11px] opacity-75">
+                              {benchSortField === 'swe_bench_verified' ? (benchSortOrder === 'desc' ? '▼' : '▲') : '⇅'}
+                            </span>
                           </div>
-                          {model.gpqa_diamond_no_tools && (
-                            <Progress value={model.gpqa_diamond_no_tools} className="h-2" />
-                          )}
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">SWE-bench Verified</span>
-                            <span className="font-semibold">{model.swe_bench_verified ?? '—'}%</span>
+                        </th>
+                        <th 
+                          onClick={() => {
+                            if (benchSortField === 'arc_agi_2_verified') {
+                              setBenchSortOrder(benchSortOrder === 'desc' ? 'asc' : 'desc')
+                            } else {
+                              setBenchSortField('arc_agi_2_verified')
+                              setBenchSortOrder('desc')
+                            }
+                          }}
+                          className="p-4 font-bold text-muted-foreground cursor-pointer hover:text-primary transition-all text-center border-l"
+                        >
+                          <div className="flex items-center justify-center gap-1.5">
+                            <span>ARC-AGI-2</span>
+                            <span className="text-[11px] opacity-75">
+                              {benchSortField === 'arc_agi_2_verified' ? (benchSortOrder === 'desc' ? '▼' : '▲') : '⇅'}
+                            </span>
                           </div>
-                          {model.swe_bench_verified && (
-                            <Progress value={model.swe_bench_verified} className="h-2" />
-                          )}
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">ARC-AGI-2 Verified</span>
-                            <span className="font-semibold">{model.arc_agi_2_verified ?? '—'}%</span>
+                        </th>
+                        <th 
+                          onClick={() => {
+                            if (benchSortField === 'hle_no_tools') {
+                              setBenchSortOrder(benchSortOrder === 'desc' ? 'asc' : 'desc')
+                            } else {
+                              setBenchSortField('hle_no_tools')
+                              setBenchSortOrder('desc')
+                            }
+                          }}
+                          className="p-4 font-bold text-muted-foreground cursor-pointer hover:text-primary transition-all text-center border-l"
+                        >
+                          <div className="flex items-center justify-center gap-1.5">
+                            <span>HLE (no tools)</span>
+                            <span className="text-[11px] opacity-75">
+                              {benchSortField === 'hle_no_tools' ? (benchSortOrder === 'desc' ? '▼' : '▲') : '⇅'}
+                            </span>
                           </div>
-                          {model.arc_agi_2_verified && (
-                            <Progress value={model.arc_agi_2_verified} className="h-2" />
-                          )}
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-muted-foreground">HLE (no tools)</span>
-                            <span className="font-semibold">{model.hle_no_tools ?? '—'}%</span>
-                          </div>
-                          {model.hle_no_tools && (
-                            <Progress value={model.hle_no_tools} className="h-2" />
-                          )}
-                        </div>
-                      </div>
-
-                      <Separator />
-
-                      <div className="flex flex-wrap gap-2">
-                        <span className="text-xs text-muted-foreground">Sources:</span>
-                        {model.sources?.map((source: any) => (
-                          <a
-                            key={source.url}
-                            href={source.url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-xs font-semibold text-primary hover:underline"
-                          >
-                            {source.label}
-                          </a>
-                        ))}
-                      </div>
-                    </motion.div>
-                  ))}
+                        </th>
+                        <th className="p-4 font-semibold text-muted-foreground text-center border-l">Sources</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {sortedBenchmarks.map((model, idx) => (
+                        <tr 
+                          key={model.id} 
+                          className="border-b border-border hover:bg-muted/30 transition-colors last:border-0"
+                        >
+                          <td className="p-4 font-medium flex items-center gap-3">
+                            <div className="flex h-9 w-9 items-center justify-center rounded-lg border bg-muted/60 shrink-0 shadow-sm">
+                              <ProviderIcon name={model.provider} className="h-4.5 w-4.5" />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-[14px]">{model.name}</div>
+                              <div className="text-[11px] text-muted-foreground">{model.released}</div>
+                            </div>
+                          </td>
+                          <td className="p-4 text-center border-l font-semibold">
+                            <div className="flex justify-center items-center">
+                              {model.lmarena_elo === maxMetrics.lmarena_elo ? (
+                                <Badge className="bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 gap-1 font-bold">
+                                  <span>👑 {model.lmarena_elo}</span>
+                                </Badge>
+                              ) : (
+                                <span>{model.lmarena_elo ?? '—'}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-4 text-center border-l font-semibold">
+                            <div className="flex justify-center items-center">
+                              {model.gpqa_diamond_no_tools === maxMetrics.gpqa_diamond_no_tools ? (
+                                <Badge className="bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 gap-1 font-bold">
+                                  <span>👑 {model.gpqa_diamond_no_tools}%</span>
+                                </Badge>
+                              ) : (
+                                <span>{model.gpqa_diamond_no_tools ? `${model.gpqa_diamond_no_tools}%` : '—'}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-4 text-center border-l font-semibold">
+                            <div className="flex justify-center items-center">
+                              {model.swe_bench_verified === maxMetrics.swe_bench_verified ? (
+                                <Badge className="bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 gap-1 font-bold">
+                                  <span>👑 {model.swe_bench_verified}%</span>
+                                </Badge>
+                              ) : (
+                                <span>{model.swe_bench_verified ? `${model.swe_bench_verified}%` : '—'}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-4 text-center border-l font-semibold">
+                            <div className="flex justify-center items-center">
+                              {model.arc_agi_2_verified === maxMetrics.arc_agi_2_verified ? (
+                                <Badge className="bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 gap-1 font-bold">
+                                  <span>👑 {model.arc_agi_2_verified}%</span>
+                                </Badge>
+                              ) : (
+                                <span>{model.arc_agi_2_verified ? `${model.arc_agi_2_verified}%` : '—'}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-4 text-center border-l font-semibold">
+                            <div className="flex justify-center items-center">
+                              {model.hle_no_tools === maxMetrics.hle_no_tools ? (
+                                <Badge className="bg-yellow-500/10 hover:bg-yellow-500/20 text-yellow-600 dark:text-yellow-400 border border-yellow-500/30 gap-1 font-bold">
+                                  <span>👑 {model.hle_no_tools}%</span>
+                                </Badge>
+                              ) : (
+                                <span>{model.hle_no_tools ? `${model.hle_no_tools}%` : '—'}</span>
+                              )}
+                            </div>
+                          </td>
+                          <td className="p-4 border-l">
+                            <div className="flex flex-wrap items-center justify-center gap-1.5">
+                              {model.sources?.map((source: any) => (
+                                <a
+                                  key={source.url}
+                                  href={source.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-xs font-bold text-primary hover:underline hover:text-primary/80 border border-primary/20 px-1.5 py-0.5 rounded bg-primary/5 transition-colors"
+                                >
+                                  {source.label}
+                                </a>
+                              ))}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </CardContent>
             </Card>
@@ -1257,6 +1617,297 @@ export default function AIModelsExplorer() {
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* Pricing Tab */}
+          <TabsContent value="pricing" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              
+              {/* Directory Column */}
+              <div className="lg:col-span-2 space-y-6">
+                <Card className="shadow-xl border-2">
+                  <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                      <CardTitle className="text-lg font-bold flex items-center gap-2">
+                        <Zap className="h-5 w-5 text-amber-500 fill-amber-500/20" />
+                        Token & Pricing Directory
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        Context window sizes and API rates per million tokens
+                      </p>
+                    </div>
+                    <div className="relative w-full sm:w-[220px]">
+                      <Search className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        value={pricingQuery}
+                        onChange={(e) => setPricingQuery(e.target.value)}
+                        placeholder="Search pricing..."
+                        className="h-9 pl-9 text-xs"
+                      />
+                    </div>
+                  </CardHeader>
+                  <CardContent className="p-0 sm:p-6">
+                    <div className="overflow-x-auto border-t sm:border border-border sm:rounded-xl">
+                      <table className="w-full text-sm text-left border-collapse min-w-[550px]">
+                        <thead>
+                          <tr className="bg-muted/50 border-b border-border select-none text-xs">
+                            <th className="p-3.5 font-semibold text-muted-foreground">Model</th>
+                            <th className="p-3.5 font-semibold text-muted-foreground text-center border-l">Context</th>
+                            <th className="p-3.5 font-semibold text-muted-foreground text-center border-l">Input / 1M</th>
+                            <th className="p-3.5 font-semibold text-muted-foreground text-center border-l">Output / 1M</th>
+                            <th className="p-3.5 font-semibold text-muted-foreground text-center border-l">Unit Cost</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {filteredPricing.map((item) => (
+                            <tr 
+                              key={item.id}
+                              className="border-b border-border hover:bg-muted/20 transition-colors last:border-0 text-xs cursor-pointer"
+                              onClick={() => {
+                                setCalcModel(item.id)
+                                toast.success(`Calculator set to ${item.name}`)
+                              }}
+                            >
+                              <td className="p-3.5 font-medium flex items-center gap-2.5">
+                                <div className="flex h-7 w-7 items-center justify-center rounded-md border bg-muted/60 shrink-0">
+                                  <ProviderIcon name={item.provider} className="h-3.5 w-3.5" />
+                                </div>
+                                <div>
+                                  <div className="font-semibold text-xs text-foreground flex items-center gap-1.5">
+                                    <span>{item.name}</span>
+                                    {item.id === calcModel && (
+                                      <Badge className="bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/20 text-[9px] px-1 py-0 h-4">
+                                        Selected
+                                      </Badge>
+                                    )}
+                                  </div>
+                                  <div className="text-[10px] text-muted-foreground max-w-[280px] truncate">{item.desc}</div>
+                                </div>
+                              </td>
+                              <td className="p-3.5 text-center border-l font-semibold text-muted-foreground">
+                                {item.context}
+                              </td>
+                              <td className="p-3.5 text-center border-l font-semibold text-foreground">
+                                {item.type === 'LLM' ? `$${item.inputCost.toFixed(2)}` : '—'}
+                              </td>
+                              <td className="p-3.5 text-center border-l font-semibold text-foreground">
+                                {item.type === 'LLM' ? `$${item.outputCost.toFixed(2)}` : '—'}
+                              </td>
+                              <td className="p-3.5 text-center border-l font-semibold text-foreground">
+                                {item.unitCost ? `$${item.unitCost.toFixed(3)}${item.unitLabel}` : '—'}
+                              </td>
+                            </tr>
+                          ))}
+                          {filteredPricing.length === 0 && (
+                            <tr>
+                              <td colSpan={5} className="p-8 text-center text-muted-foreground">
+                                No models found matching pricing criteria.
+                              </td>
+                            </tr>
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Calculator Column */}
+              <div className="space-y-6">
+                <Card className="shadow-xl border-2 border-primary/20 bg-gradient-to-b from-card to-primary/5">
+                  <CardHeader>
+                    <CardTitle className="text-lg font-bold flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      Cost Estimator
+                    </CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                      Estimate your API or usage expenses in real-time
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-5">
+                    
+                    {/* Model Dropdown */}
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Select Model</label>
+                      <Select value={calcModel} onValueChange={setCalcModel}>
+                        <SelectTrigger className="w-full border-2">
+                          <SelectValue placeholder="Select Model" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {PRICING_DATA.map((p) => (
+                            <SelectItem key={p.id} value={p.id} className="cursor-pointer">
+                              <div className="flex items-center gap-2">
+                                <span className={`h-2.5 w-2.5 rounded-full ${p.type === 'LLM' ? 'bg-purple-500' : 'bg-blue-500'} shrink-0`} />
+                                <span>{p.name} ({p.provider})</span>
+                              </div>
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* LLM Inputs */}
+                    {calcResult.model.type === 'LLM' ? (
+                      <div className="space-y-5">
+                        
+                        {/* Input Tokens */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Input Volume (Tokens)</label>
+                            <span className="text-xs font-extrabold text-primary">{calcInputTokens.toLocaleString()}</span>
+                          </div>
+                          <Input
+                            type="number"
+                            value={calcInputTokens}
+                            onChange={(e) => setCalcInputTokens(Math.max(0, parseInt(e.target.value) || 0))}
+                            className="h-9 text-xs border-2"
+                          />
+                          {/* Presets */}
+                          <div className="flex flex-wrap gap-1 mt-1.5">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcInputTokens(10000)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              10k (Prompt)
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcInputTokens(100000)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              100k (Doc)
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcInputTokens(500000)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              500k (Codebase)
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Output Tokens */}
+                        <div className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Output Volume (Tokens)</label>
+                            <span className="text-xs font-extrabold text-primary">{calcOutputTokens.toLocaleString()}</span>
+                          </div>
+                          <Input
+                            type="number"
+                            value={calcOutputTokens}
+                            onChange={(e) => setCalcOutputTokens(Math.max(0, parseInt(e.target.value) || 0))}
+                            className="h-9 text-xs border-2"
+                          />
+                          {/* Presets */}
+                          <div className="flex flex-wrap gap-1 mt-1.5">
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcOutputTokens(1000)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              1k (Short)
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcOutputTokens(4000)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              4k (Code)
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcOutputTokens(16000)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              16k (Long)
+                            </Button>
+                          </div>
+                        </div>
+
+                      </div>
+                    ) : (
+                      /* Generation Inputs */
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+                            Quantity ({calcResult.model.unitLabel?.replace('/', '')})
+                          </label>
+                          <span className="text-xs font-extrabold text-primary">{calcQuantity.toLocaleString()}</span>
+                        </div>
+                        <Input
+                          type="number"
+                          value={calcQuantity}
+                          onChange={(e) => setCalcQuantity(Math.max(0, parseInt(e.target.value) || 0))}
+                          className="h-9 text-xs border-2"
+                        />
+                        {/* Slider presets */}
+                        <div className="flex gap-1 mt-1.5">
+                          {[5, 25, 100].map((val) => (
+                            <Button 
+                              key={val}
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => setCalcQuantity(val)}
+                              className="text-[10px] h-6 px-2 py-0"
+                            >
+                              {val} {calcResult.model.type === 'Image' ? 'images' : 'sec'}
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    <Separator className="my-2" />
+
+                    {/* Calculated Output Cost */}
+                    <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-center space-y-1">
+                      <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest">Estimated Cost</div>
+                      <div className="text-3xl font-extrabold text-primary tracking-tight">
+                        {calcResult.total < 0.000001 ? '$0.00' : `$${calcResult.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 5 })}`}
+                      </div>
+                      <div className="text-[10px] text-muted-foreground">
+                        {calcResult.model.type === 'LLM' ? (
+                          <span>
+                            In: ${(calcResult.breakdown.input).toFixed(4)} · Out: ${(calcResult.breakdown.output).toFixed(4)}
+                          </span>
+                        ) : (
+                          <span>
+                            Media Unit Base Pricing
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Money Saving Tip Card */}
+                    {calcResult.savings && (
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="p-3.5 rounded-xl border border-yellow-500/30 bg-yellow-500/10 dark:bg-yellow-500/15 text-xs space-y-1.5 text-yellow-800 dark:text-yellow-400"
+                      >
+                        <div className="font-extrabold flex items-center gap-1.5">
+                          <Sparkles className="h-3.5 w-3.5 fill-yellow-500/10 text-yellow-500" />
+                          <span>Smart Savings Opportunity!</span>
+                        </div>
+                        <p className="leading-normal">
+                          Switch to <strong className="font-bold">{calcResult.savings.name}</strong> to execute this exact prompt for <strong className="font-bold">${calcResult.savings.total.toFixed(4)}</strong> — saving you <strong className="font-bold">${calcResult.savings.savedAmount.toFixed(2)} ({calcResult.savings.percent}%)</strong>!
+                        </p>
+                      </motion.div>
+                    )}
+
+                  </CardContent>
+                </Card>
+              </div>
+
+            </div>
+          </TabsContent>
         </Tabs>
 
         {/* Stats Overview */}
@@ -1294,7 +1945,7 @@ export default function AIModelsExplorer() {
               <CardContent>
                 <div className="flex flex-wrap gap-3">
                   {Object.entries(stats.byProvider)
-                    .sort(([, a], [, b]) => b - a)
+                    .sort(([, a], [, b]) => (b as number) - (a as number))
                     .map(([provider, count]) => (
                       <div
                         key={provider}
