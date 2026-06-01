@@ -743,7 +743,7 @@ function ModelCard({
               {/* Favorite Button */}
               <button
                 onClick={onToggleFavorite}
-                className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 hover:bg-white/20 dark:border-black/20 dark:bg-black/10 dark:hover:bg-black/20 transition-colors"
+                className="absolute right-4 top-4 z-10 flex h-11 w-11 sm:h-9 sm:w-9 items-center justify-center rounded-full border-2 border-white/20 bg-white/10 hover:bg-white/20 dark:border-black/20 dark:bg-black/10 dark:hover:bg-black/20 transition-colors cursor-pointer"
               >
                 {isFavorite ? (
                   <Star className="h-4 w-4 fill-yellow-500 text-yellow-500" />
@@ -840,6 +840,7 @@ export default function AIModelsExplorer() {
   const { theme, setTheme } = useTheme()
   const isMobile = useIsMobile()
   const [palette, setPalette] = useState('slate')
+  const [isFilterDrawerOpen, setIsFilterDrawerOpen] = useState(false)
 
   // Pricing calculator states
   const [calcModel, setCalcModel] = useState('chatgpt-5-5-pro')
@@ -1066,12 +1067,12 @@ export default function AIModelsExplorer() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20">
+    <div className="min-h-screen bg-gradient-to-b from-background via-background to-muted/20 pb-20 sm:pb-0">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               <motion.div
                 className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/50 text-primary-foreground shadow-lg"
                 whileHover={{ scale: 1.05 }}
@@ -1080,18 +1081,22 @@ export default function AIModelsExplorer() {
                 <Sparkles className="h-5 w-5" />
               </motion.div>
               <div className="flex flex-col">
-                <h1 className="text-lg font-bold tracking-tight sm:text-xl">AI Models Explorer</h1>
+                <h1 className="text-base font-bold tracking-tight sm:text-xl">
+                  AI <span className="hidden sm:inline">Models </span>Explorer
+                </h1>
                 <p className="text-xs text-muted-foreground hidden sm:block">Discover & Compare AI Models</p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3">
               {/* Color Palette / Theme Selector */}
               <Select value={palette} onValueChange={changePalette}>
-                <SelectTrigger className="w-[185px] border-2 h-10 font-semibold hover:bg-muted transition-all">
-                  <div className="flex items-center gap-2">
-                    <Palette className="h-4 w-4 text-primary" />
-                    <SelectValue placeholder="Theme Palette" />
+                <SelectTrigger className="w-12 h-12 sm:w-[185px] sm:h-10 border-2 rounded-xl flex items-center justify-center font-semibold hover:bg-muted transition-all p-0 sm:px-3">
+                  <div className="flex items-center justify-center gap-2">
+                    <Palette className="h-5 w-5 sm:h-4 sm:w-4 text-primary" />
+                    <span className="hidden sm:inline">
+                      <SelectValue placeholder="Theme Palette" />
+                    </span>
                   </div>
                 </SelectTrigger>
                 <SelectContent>
@@ -1109,18 +1114,17 @@ export default function AIModelsExplorer() {
               {/* Enhanced Theme Toggle Button */}
               <Button
                 variant={theme === 'dark' ? 'default' : 'outline'}
-                size="default"
                 onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                className="gap-2 font-semibold h-10"
+                className="w-12 h-12 sm:w-auto sm:h-10 rounded-xl sm:px-4 p-0 flex items-center justify-center font-semibold gap-2 transition-all border-2"
               >
                 {theme === 'dark' ? (
                   <>
-                    <Moon className="h-4 w-4" />
+                    <Moon className="h-5 w-5 sm:h-4 sm:w-4" />
                     <span className="hidden sm:inline">Dark Mode</span>
                   </>
                 ) : (
                   <>
-                    <Sun className="h-4 w-4" />
+                    <Sun className="h-5 w-5 sm:h-4 sm:w-4" />
                     <span className="hidden sm:inline">Light Mode</span>
                   </>
                 )}
@@ -1188,62 +1192,223 @@ export default function AIModelsExplorer() {
           transition={{ delay: 0.3 }}
           className="mb-6 space-y-4"
         >
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <div className="relative flex-1">
-              <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search models, providers, tags..."
-                className="h-11 pl-10"
-              />
+          <div className="flex flex-col gap-3">
+            {/* Desktop Filters (Visible on tablet/desktop) */}
+            <div className="hidden sm:flex flex-row items-center gap-3 w-full">
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search models, providers, tags..."
+                  className="h-11 pl-10"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-2 shrink-0">
+                <Select value={sort} onValueChange={setSort}>
+                  <SelectTrigger className="w-[140px]">
+                    <SortAsc className="mr-2 h-4 w-4" />
+                    <SelectValue placeholder="Sort" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SORT_OPTIONS.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={provider} onValueChange={setProvider}>
+                  <SelectTrigger className="w-[140px]">
+                    <Filter className="mr-2 h-4 w-4" />
+                    <SelectValue placeholder="Provider" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="All">All Providers</SelectItem>
+                    {providers.map((p) => (
+                      <SelectItem key={p} value={p}>
+                        {p}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <Select value={type} onValueChange={setType}>
+                  <SelectTrigger className="w-[140px]">
+                    <BarChart3 className="mr-2 h-4 w-4" />
+                    <SelectValue placeholder="Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TYPES.map((t) => (
+                      <SelectItem key={t} value={t}>
+                        {t}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <Select value={sort} onValueChange={setSort}>
-                <SelectTrigger className="w-[140px]">
-                  <SortAsc className="mr-2 h-4 w-4" />
-                  <SelectValue placeholder="Sort" />
-                </SelectTrigger>
-                <SelectContent>
-                  {SORT_OPTIONS.map((opt) => (
-                    <SelectItem key={opt.value} value={opt.value}>
-                      {opt.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            {/* Mobile Filters (Visible on mobile only) */}
+            <div className="flex sm:hidden items-center gap-2 w-full">
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search models..."
+                  className="h-12 pl-10 border-2 rounded-xl"
+                />
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => setIsFilterDrawerOpen(true)}
+                className="w-12 h-12 p-0 flex items-center justify-center shrink-0 border-2 rounded-xl bg-card hover:bg-muted transition-all"
+                aria-label="Filter models"
+              >
+                <Filter className="h-5 w-5 text-primary" />
+              </Button>
+            </div>
 
-              <Select value={provider} onValueChange={setProvider}>
-                <SelectTrigger className="w-[140px]">
-                  <Filter className="mr-2 h-4 w-4" />
-                  <SelectValue placeholder="Provider" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="All">All Providers</SelectItem>
-                  {providers.map((p) => (
-                    <SelectItem key={p} value={p}>
-                      {p}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={type} onValueChange={setType}>
-                <SelectTrigger className="w-[140px]">
-                  <BarChart3 className="mr-2 h-4 w-4" />
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent>
-                  {TYPES.map((t) => (
-                    <SelectItem key={t} value={t}>
-                      {t}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            {/* Mobile Category Horizontal Scroll Pill Strip */}
+            <div className="flex sm:hidden gap-2 overflow-x-auto pb-1.5 -mx-4 px-4 scrollbar-none snap-x select-none">
+              {TYPES.map((t) => {
+                const isActive = type === t
+                return (
+                  <button
+                    key={t}
+                    onClick={() => {
+                      setType(t)
+                      toast.success(`Filter set to: ${t}`)
+                    }}
+                    className={`h-10 px-4 rounded-xl border-2 font-semibold text-xs transition-colors shrink-0 snap-start flex items-center gap-1.5 ${
+                      isActive
+                        ? 'bg-primary text-primary-foreground border-primary shadow-sm'
+                        : 'bg-card border-muted hover:bg-muted text-muted-foreground hover:text-foreground'
+                    }`}
+                    style={{ minWidth: '60px', minHeight: '40px' }}
+                  >
+                    {getTypeIcon(t)}
+                    <span>{t}</span>
+                  </button>
+                )
+              })}
             </div>
           </div>
+
+          {/* Mobile Filters Drawer Dialog */}
+          <Dialog open={isFilterDrawerOpen} onOpenChange={setIsFilterDrawerOpen}>
+            <DialogContent className="sm:max-w-md w-[calc(100%-2rem)] max-w-sm rounded-2xl p-6 border-2">
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2 text-lg font-bold">
+                  <Filter className="h-5 w-5 text-primary animate-bounce" />
+                  Filter & Sort Models
+                </DialogTitle>
+                <DialogDescription>
+                  Narrow down the catalog to find the exact model you need.
+                </DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-4 py-4">
+                {/* Sort Dropdown */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Sort Order</label>
+                  <Select value={sort} onValueChange={(val) => {
+                    setSort(val)
+                    toast.success(`Sorted by: ${SORT_OPTIONS.find(o => o.value === val)?.label}`)
+                  }}>
+                    <SelectTrigger className="w-full h-11 border-2 font-semibold rounded-xl">
+                      <div className="flex items-center gap-2">
+                        <SortAsc className="h-4 w-4 text-primary" />
+                        <SelectValue placeholder="Sort" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {SORT_OPTIONS.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value} className="cursor-pointer font-medium">
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Provider Dropdown */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">AI Provider</label>
+                  <Select value={provider} onValueChange={(val) => {
+                    setProvider(val)
+                    toast.success(val === 'All' ? 'Showing all providers' : `Provider set to ${val}`)
+                  }}>
+                    <SelectTrigger className="w-full h-11 border-2 font-semibold rounded-xl">
+                      <div className="flex items-center gap-2">
+                        <Filter className="h-4 w-4 text-primary" />
+                        <SelectValue placeholder="Provider" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="All" className="cursor-pointer font-medium">All Providers</SelectItem>
+                      {providers.map((p) => (
+                        <SelectItem key={p} value={p} className="cursor-pointer font-medium">
+                          {p}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Type Dropdown */}
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Model Capability Type</label>
+                  <Select value={type} onValueChange={(val) => {
+                    setType(val)
+                    toast.success(val === 'All' ? 'Showing all capability types' : `Type set to ${val}`)
+                  }}>
+                    <SelectTrigger className="w-full h-11 border-2 font-semibold rounded-xl">
+                      <div className="flex items-center gap-2">
+                        <BarChart3 className="h-4 w-4 text-primary" />
+                        <SelectValue placeholder="Type" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TYPES.map((t) => (
+                        <SelectItem key={t} value={t} className="cursor-pointer font-medium">
+                          {t}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-2 mt-2">
+                <Button
+                  onClick={() => setIsFilterDrawerOpen(false)}
+                  className="w-full h-11 rounded-xl font-bold bg-primary text-primary-foreground transition-all"
+                >
+                  Apply Filters
+                </Button>
+                
+                {(provider !== 'All' || type !== 'All' || query !== '') && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setProvider('All')
+                      setType('All')
+                      setQuery('')
+                      setIsFilterDrawerOpen(false)
+                      toast.success('Cleared all filter criteria')
+                    }}
+                    className="w-full h-10 rounded-xl text-xs text-muted-foreground hover:text-destructive transition-all"
+                  >
+                    Clear all filters
+                  </Button>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
 
           {/* Active Filters */}
           {(provider !== 'All' || type !== 'All' || favorites.size > 0) && (
@@ -1294,7 +1459,7 @@ export default function AIModelsExplorer() {
 
         {/* Main Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 lg:w-[800px]">
+          <TabsList className="hidden sm:grid w-full grid-cols-4 lg:w-[800px]">
             <TabsTrigger value="models" className="gap-2 font-semibold">
               <Sparkles className="h-4 w-4 text-primary" />
               Models ({filtered.length})
@@ -1358,7 +1523,8 @@ export default function AIModelsExplorer() {
                 )}
               </CardHeader>
               <CardContent className="p-0 sm:p-6">
-                <div className="overflow-x-auto border-t sm:border border-border sm:rounded-xl">
+                {/* Desktop Grid Layout (Visible on larger screens) */}
+                <div className="hidden sm:block overflow-x-auto border-t sm:border border-border sm:rounded-xl">
                   <table className="w-full text-sm text-left border-collapse min-w-[800px]">
                     <thead>
                       <tr className="bg-muted/50 border-b border-border select-none">
@@ -1545,6 +1711,160 @@ export default function AIModelsExplorer() {
                       ))}
                     </tbody>
                   </table>
+                </div>
+
+                {/* Mobile Card List (Visible on mobile only) */}
+                <div className="block sm:hidden space-y-4 p-4 border-t border-border bg-background/50">
+                  {sortedBenchmarks.map((model) => (
+                    <div 
+                      key={model.id}
+                      className="rounded-xl border-2 bg-card p-4 space-y-3 shadow-md hover:border-primary/40 transition-all"
+                    >
+                      {/* Model Info Header */}
+                      <div className="flex items-center gap-3 border-b pb-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg border bg-muted shrink-0 shadow-sm">
+                          <ProviderIcon name={model.provider} className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-foreground">{model.name}</h4>
+                          <div className="flex items-center gap-1.5 mt-0.5 text-xs text-muted-foreground">
+                            <span>{model.provider}</span>
+                            <span>·</span>
+                            <span>{model.released}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Benchmarks Metrics Stack */}
+                      <div className="space-y-3.5 pt-1">
+                        {/* LMArena Elo */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold text-muted-foreground">LMArena Elo</span>
+                            <span className="font-bold text-foreground">
+                              {model.lmarena_elo === maxMetrics.lmarena_elo ? (
+                                <span className="text-yellow-600 dark:text-yellow-400 font-extrabold">👑 {model.lmarena_elo}</span>
+                              ) : (
+                                model.lmarena_elo ?? '—'
+                              )}
+                            </span>
+                          </div>
+                          {model.lmarena_elo && (
+                            <Progress 
+                              value={(model.lmarena_elo / maxMetrics.lmarena_elo) * 100} 
+                              className="h-2 bg-muted [&>div]:bg-purple-500" 
+                            />
+                          )}
+                        </div>
+
+                        {/* GPQA Diamond */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold text-muted-foreground">GPQA Diamond</span>
+                            <span className="font-bold text-foreground">
+                              {model.gpqa_diamond_no_tools === maxMetrics.gpqa_diamond_no_tools ? (
+                                <span className="text-yellow-600 dark:text-yellow-400 font-extrabold">👑 {model.gpqa_diamond_no_tools}%</span>
+                              ) : (
+                                model.gpqa_diamond_no_tools ? `${model.gpqa_diamond_no_tools}%` : '—'
+                              )}
+                            </span>
+                          </div>
+                          {model.gpqa_diamond_no_tools && (
+                            <Progress 
+                              value={model.gpqa_diamond_no_tools} 
+                              className="h-2 bg-muted [&>div]:bg-blue-500" 
+                            />
+                          )}
+                        </div>
+
+                        {/* SWE-bench */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold text-muted-foreground">SWE-bench (Verified)</span>
+                            <span className="font-bold text-foreground">
+                              {model.swe_bench_verified === maxMetrics.swe_bench_verified ? (
+                                <span className="text-yellow-600 dark:text-yellow-400 font-extrabold">👑 {model.swe_bench_verified}%</span>
+                              ) : (
+                                model.swe_bench_verified ? `${model.swe_bench_verified}%` : '—'
+                              )}
+                            </span>
+                          </div>
+                          {model.swe_bench_verified && (
+                            <Progress 
+                              value={model.swe_bench_verified} 
+                              className="h-2 bg-muted [&>div]:bg-green-500" 
+                            />
+                          )}
+                        </div>
+
+                        {/* ARC-AGI-2 */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold text-muted-foreground">ARC-AGI-2</span>
+                            <span className="font-bold text-foreground">
+                              {model.arc_agi_2_verified === maxMetrics.arc_agi_2_verified ? (
+                                <span className="text-yellow-600 dark:text-yellow-400 font-extrabold">👑 {model.arc_agi_2_verified}%</span>
+                              ) : (
+                                model.arc_agi_2_verified ? `${model.arc_agi_2_verified}%` : '—'
+                              )}
+                            </span>
+                          </div>
+                          {model.arc_agi_2_verified && (
+                            <Progress 
+                              value={model.arc_agi_2_verified} 
+                              className="h-2 bg-muted [&>div]:bg-red-500" 
+                            />
+                          )}
+                        </div>
+
+                        {/* HLE */}
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="font-semibold text-muted-foreground">HLE (no tools)</span>
+                            <span className="font-bold text-foreground">
+                              {model.hle_no_tools === maxMetrics.hle_no_tools ? (
+                                <span className="text-yellow-600 dark:text-yellow-400 font-extrabold">👑 {model.hle_no_tools}%</span>
+                              ) : (
+                                model.hle_no_tools ? `${model.hle_no_tools}%` : '—'
+                              )}
+                            </span>
+                          </div>
+                          {model.hle_no_tools && (
+                            <Progress 
+                              value={model.hle_no_tools} 
+                              className="h-2 bg-muted [&>div]:bg-orange-500" 
+                            />
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Action Button & Sources */}
+                      <div className="flex items-center justify-between border-t pt-3 mt-2 text-xs">
+                        <div className="flex flex-wrap gap-1">
+                          {model.sources?.map((source: any) => (
+                            <a
+                              key={source.url}
+                              href={source.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="font-bold text-primary hover:underline hover:text-primary/80 border border-primary/20 px-1.5 py-0.5 rounded bg-primary/5 transition-colors"
+                            >
+                              {source.label}
+                            </a>
+                          ))}
+                        </div>
+                        <a
+                          href={model.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="flex items-center gap-1 font-bold text-primary hover:underline"
+                        >
+                          <span>Details</span>
+                          <ExternalLink className="h-3.5 w-3.5" />
+                        </a>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
@@ -1759,31 +2079,28 @@ export default function AIModelsExplorer() {
                             type="number"
                             value={calcInputTokens}
                             onChange={(e) => setCalcInputTokens(Math.max(0, parseInt(e.target.value) || 0))}
-                            className="h-9 text-xs border-2"
+                            className="h-11 sm:h-9 text-sm sm:text-xs border-2 rounded-xl"
                           />
                           {/* Presets */}
-                          <div className="flex flex-wrap gap-1 mt-1.5">
+                          <div className="flex flex-wrap gap-2 sm:gap-1 mt-1.5">
                             <Button 
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcInputTokens(10000)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               10k (Prompt)
                             </Button>
                             <Button 
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcInputTokens(100000)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               100k (Doc)
                             </Button>
                             <Button 
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcInputTokens(500000)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               500k (Codebase)
                             </Button>
@@ -1800,31 +2117,28 @@ export default function AIModelsExplorer() {
                             type="number"
                             value={calcOutputTokens}
                             onChange={(e) => setCalcOutputTokens(Math.max(0, parseInt(e.target.value) || 0))}
-                            className="h-9 text-xs border-2"
+                            className="h-11 sm:h-9 text-sm sm:text-xs border-2 rounded-xl"
                           />
                           {/* Presets */}
-                          <div className="flex flex-wrap gap-1 mt-1.5">
+                          <div className="flex flex-wrap gap-2 sm:gap-1 mt-1.5">
                             <Button 
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcOutputTokens(1000)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               1k (Short)
                             </Button>
                             <Button 
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcOutputTokens(4000)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               4k (Code)
                             </Button>
                             <Button 
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcOutputTokens(16000)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               16k (Long)
                             </Button>
@@ -1845,17 +2159,16 @@ export default function AIModelsExplorer() {
                           type="number"
                           value={calcQuantity}
                           onChange={(e) => setCalcQuantity(Math.max(0, parseInt(e.target.value) || 0))}
-                          className="h-9 text-xs border-2"
+                          className="h-11 sm:h-9 text-sm sm:text-xs border-2 rounded-xl"
                         />
                         {/* Slider presets */}
-                        <div className="flex gap-1 mt-1.5">
+                        <div className="flex flex-wrap gap-2 sm:gap-1 mt-1.5">
                           {[5, 25, 100].map((val) => (
                             <Button 
                               key={val}
                               variant="outline" 
-                              size="sm" 
                               onClick={() => setCalcQuantity(val)}
-                              className="text-[10px] h-6 px-2 py-0"
+                              className="text-xs sm:text-[10px] h-10 sm:h-6 px-3 sm:px-2 rounded-lg font-semibold sm:font-normal"
                             >
                               {val} {calcResult.model.type === 'Image' ? 'images' : 'sec'}
                             </Button>
@@ -2039,7 +2352,7 @@ export default function AIModelsExplorer() {
       </Dialog>
 
       {/* Footer */}
-      <footer className="mt-12 border-t py-8 text-center text-sm text-muted-foreground">
+      <footer className="mt-12 border-t py-8 text-center text-sm text-muted-foreground pb-28 sm:pb-8">
         <p className="mb-2">
           Timeline updated with 2025 releases: GLM-4.7 (Dec), Llama 4 (Apr), Midjourney v7 (Apr), Gemini 2.0 (Jan), and o3-mini (Jan).
         </p>
@@ -2047,6 +2360,50 @@ export default function AIModelsExplorer() {
           Data sourced from official announcements and public benchmarks. All links point to model interfaces.
         </p>
       </footer>
+
+      {/* Glassmorphic Floating Bottom Navigation Tab Bar for Mobile */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 sm:hidden w-[calc(100%-2rem)] max-w-md h-16 rounded-2xl border border-border/80 bg-background/80 backdrop-blur-xl shadow-2xl flex items-center justify-around px-2 py-1 select-none pb-[calc(4px+env(safe-area-inset-bottom,0px))]">
+        {[
+          { id: 'models', label: 'Models', icon: Sparkles, color: 'text-primary animate-pulse' },
+          { id: 'benchmarks', label: 'Benchmarks', icon: Award, color: 'text-primary' },
+          { id: 'timeline', label: 'Timeline', icon: Calendar, color: 'text-primary' },
+          { id: 'pricing', label: 'Pricing', icon: Zap, color: 'text-amber-500 fill-amber-500/20' },
+        ].map((tab) => {
+          const Icon = tab.icon
+          const isActive = activeTab === tab.id
+          return (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id)
+                window.scrollTo({ top: 0, behavior: 'smooth' })
+              }}
+              className="relative flex-1 h-12 flex flex-col items-center justify-center rounded-xl transition-all duration-200"
+              style={{ minWidth: '48px', minHeight: '48px' }}
+              aria-label={tab.label}
+            >
+              {isActive && (
+                <motion.div
+                  layoutId="activeMobileTabBackground"
+                  className="absolute inset-0 bg-primary/10 dark:bg-primary/20 rounded-xl -z-10"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+              <Icon className={`h-5 w-5 ${isActive ? tab.color : 'text-muted-foreground'} transition-colors`} />
+              <span className={`text-[10px] mt-1 font-semibold leading-none ${isActive ? 'text-foreground font-bold' : 'text-muted-foreground'}`}>
+                {tab.label}
+              </span>
+              {isActive && (
+                <motion.div
+                  layoutId="activeMobileTabIndicator"
+                  className="absolute bottom-1.5 h-1 w-1 rounded-full bg-primary"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+            </button>
+          )
+        })}
+      </div>
     </div>
   )
 }
