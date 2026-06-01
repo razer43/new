@@ -2376,7 +2376,6 @@ export default function AIModelsExplorer() {
               key={tab.id}
               onClick={() => {
                 setActiveTab(tab.id)
-                window.scrollTo({ top: 0, behavior: 'smooth' })
               }}
               className="relative flex-1 h-12 flex flex-col items-center justify-center rounded-xl transition-all duration-200"
               style={{ minWidth: '48px', minHeight: '48px' }}
